@@ -8,11 +8,11 @@
 //#ef General Variables
 const TEMPO_COLORS = [clr_limeGreen, clr_mustard, clr_brightBlue, clr_brightOrange, clr_lavander, clr_darkRed2, clr_brightGreen, clr_lightGrey, clr_neonMagenta, clr_plum, clr_blueGrey, clr_lightGrey, clr_lightGreen];
 //Timing
-const LEADIN_SEC = 0;
+const LEADIN_SEC = 8;
 const FRAMERATE = 60;
 let FRAMECOUNT = -LEADIN_SEC * FRAMERATE;
 const MS_PER_FRAME = 1000.0 / FRAMERATE;
-let animationIsGo = true;
+let animationIsGo = false;
 //Timesync
 const TS = timesync.create({
   server: '/timesync',
@@ -69,14 +69,17 @@ function update() {
 let tempiTempos = [
   [60, 60, ''],
   [83, 83, ''],
+  [91, 91, ''],
   [19, 180, 'a'],
-  [200, 23, 'd']
+  [200, 23, 'd'],
+  [28, 169, 'a'],
+  [99, 11, 'd']
 ];
 //Tempi Panel
 let tempiPanel = {};
 tempiPanel['title'] = "Tempi";
 let tempiCanvasClr = 'black';
-let tempiPanel_H = 160;
+let tempiPanel_H = 280;
 let tempiPanel_W = 912;
 
 function makeTempiPanel() {
@@ -87,6 +90,13 @@ function makeTempiPanel() {
     onwindowresize: true,
     clr: 'none',
     ipos: 'center-top',
+  });
+  tPanel.content.addEventListener('click', function() {
+    document.documentElement.webkitRequestFullScreen({
+      navigationUI: 'hide'
+    });
+    animationIsGo = true;
+    requestAnimationFrame(animationEngine);
   });
   tempiPanel['panel'] = tPanel;
   tempiPanel['div'] = tPanel.content;
